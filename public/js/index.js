@@ -10,11 +10,14 @@ let button = document.querySelector("#liste button");
 let taches = () => {
     let divButton = document.createElement("div");
     let elemLi = document.createElement("li");
-    elemLi.innerText = input.value;
-    elemLi.style.fontFamily = "system-ui";
-    elemLi.style.fontWeight = "bold"
-    elemLi.className = "text-left"
+    let spanText = document.createElement("span");
+    spanText.innerText = input.value;
+    spanText.style.fontFamily = "system-ui";
+    spanText.style.fontWeight = "bold"
+    spanText.className = "text-left"
     elemLi.append(divButton);
+    elemLi.prepend(spanText);
+    console.log(elemUl)
 
     // Creation du button Delete + fonction
     let buttonDelet = document.createElement("button");
@@ -73,5 +76,42 @@ let taches = () => {
         }
     }
     buttonValid.addEventListener("click", toggValid);
+
+
+    // CREATION BUTTON EDIT + FONCTION
+    let buttonEdit = document.createElement ("button");
+    buttonEdit.className = "btn btn-outline-info";
+    let iconEdit = document.createElement("i");
+    iconEdit.className = "far fa-edit";
+    buttonEdit.append(iconEdit)
+    divButton.append(buttonEdit);
+
+    edition = false;
+    let changeInput = () => {
+        if (edition == false) {
+            let inputEdit = document.createElement("input");
+            inputEdit.addEventListener('click', () => {
+                event.stopPropagation();
+            })
+            buttonEdit.append(inputEdit);
+            edition = true;
+        } else {
+            let inputEdit = buttonEdit.children[1];
+            console.log(buttonEdit);
+            buttonEdit.removeChild(inputEdit);
+            spanText.innerText = inputEdit.value
+            // validInput();
+            edition = false;
+        }
+        
+    }
+    // let validInput = () => {
+    //     console.log('on lance validInput');
+    //     // buttonEdit.contentEditable = "true";
+    //     console.log(inputEdit)
+    // }
+    // buttonEdit.addEventListener("click",validInput);
+    buttonEdit.addEventListener("click", changeInput);
+    console.log(elemUl)
 }
 button.addEventListener("click", taches);
